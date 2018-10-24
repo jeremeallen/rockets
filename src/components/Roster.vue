@@ -1,10 +1,15 @@
 <template>
-  <ul class="list-group">
-    <li class="list-group-item" v-for='(player, index) in orderedPlayers' :key='`player-${ index }`'>
-      <h3>{{ player.firstName }} {{ player.lastName }}
-      <span class="badge badge-primary badge-pill float-right">{{ player.number }}</span></h3>
-    </li> 
-  </ul>
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <h2 class='text-center'>Roster</h2>
+      <ul class="list-group">
+        <li class="list-group-item" v-for='(player, index) in orderedPlayers' :key='`player-${ index }`'>
+          <h3>{{ player.firstName }} {{ player.lastName }}
+          <span class="badge badge-secondary badge-pill float-left ml-5 mr-5">{{ player.number }}</span></h3>
+        </li> 
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>

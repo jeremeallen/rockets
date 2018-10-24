@@ -13,7 +13,10 @@
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">NJ Rockets</a>
+      <a class="navbar-brand logo" href="#">
+        <img alt="NJ Rockets" src="./assets/NJR-logo_large.png" width='30'>
+        NJ Rockets
+      </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -43,11 +46,11 @@ export default {
   @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
   body {
-    padding-top: 5rem;
+    padding-top: 3rem;
   }
-  .starter-template {
-    padding: 3rem 1.5rem;
-    text-align: center;
+
+  .logo img {
+    margin-top: -10px
   }
 </style>
 
