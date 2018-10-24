@@ -1,17 +1,5 @@
 <template>
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Starter Template for Bootstrap</title>
-  </head>
-
-  <body>
-
+  <div class='body'>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
       <a class="navbar-brand logo" href="#">
         <img alt="NJ Rockets" src="./assets/NJR-logo_large.png" width='30'>
@@ -21,14 +9,12 @@
         <span class="navbar-toggler-icon"></span>
       </button>
     </nav>
-
     <main role="main" class="container">
       <div id="app">
         <roster></roster>
       </div>
     </main>
-  </body>
-</html>
+  </div>
 </template>
 
 <script>
@@ -45,8 +31,8 @@ export default {
 <style lang='scss'>
   @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
-  body {
-    padding-top: 3rem;
+  .body {
+    padding-top: 4rem;
   }
 
   .logo img {
