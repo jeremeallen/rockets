@@ -1,13 +1,28 @@
 <template>
   <div class="row">
-    <div class="col-sm-6 offset-sm-3">
+    <div class="col-sm-8 offset-sm-2">
       <h2 class='text-center'>Roster</h2>
-      <ul class="list-group">
-        <li class="list-group-item" v-for='(player, index) in orderedPlayers' :key='`player-${ index }`'>
-          <h3>{{ player.firstName }} {{ player.lastName }}
-          <span class="badge badge-secondary badge-pill float-left ml-5 mr-5">{{ player.number }}</span></h3>
-        </li> 
-      </ul>
+      <form>
+        <div class="form-group">
+          <input type='text' placeholder='Search' v-model='search' class='form-control' />
+        </div>
+      </form>
+      <table class='table table-sm' v-if='filteredPlayers.length'>
+        <tbody>
+          <tr v-for='(player, index) in filteredPlayers' :key='`player-${ index }`'>
+            <td class='pt-3'>
+              <h3><span class="badge badge-secondary badge-pill float-left ml-2 mr-3">{{ player.number }}</span></h3>
+            </td>
+            <td class='pt-3'>
+              <h3>{{ player.firstName }} {{ player.lastName }}</h3>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-else class='text-center'>
+        <h5>No players</h5>
+        <button class='btn btn-secondary' @click.prevent='search = ""'>Clear filter</button>
+      </div>
     </div>
   </div>
 </template>
@@ -22,6 +37,7 @@ export default {
     return {
       headers: ['First Name', 'Last Name', 'Number'],
       players: [],
+      search: ''
     };
   },
   computed: {
@@ -33,6 +49,14 @@ export default {
           number: Number(p.gsx$number['$t']),
         };
       });
+    },
+
+    filteredPlayers() {
+      return _.sortBy(this.cleanedPlayers.filter(p => {
+        const searchTerm = `${p.firstName},${p.lastName},${p.number}`.toLowerCase();
+        const found = searchTerm.indexOf(this.search.toLowerCase()) !== -1;
+        return found ? true : false;
+      }), ['number', 'lastName']);
     },
 
     orderedPlayers() {
