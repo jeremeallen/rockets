@@ -11,20 +11,16 @@
     </nav>
     <main role="main" class="container">
       <div id="app">
-        <roster></roster>
+        <router-view></router-view>
       </div>
     </main>
   </div>
 </template>
 
 <script>
-import Roster from './components/Roster.vue'
 
 export default {
   name: 'app',
-  components: {
-    Roster
-  }
 }
 </script>
 

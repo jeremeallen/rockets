@@ -1,12 +1,7 @@
 <template>
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
-      <h2 class='text-center'>Roster</h2>
-      <form>
-        <div class="form-group">
-          <input type='text' placeholder='Search' v-model='search' class='form-control' />
-        </div>
-      </form>
+      <h2 class='text-center'>Schedule</h2>
       <table class='table table-sm' v-if='filteredPlayers.length'>
         <tbody>
           <tr v-for='(player, index) in filteredPlayers' :key='`player-${ index }`'>
@@ -14,7 +9,7 @@
               <h3><span class="badge badge-secondary badge-pill float-left ml-2 mr-3">{{ player.number }}</span></h3>
             </td>
             <td class='pt-3'>
-              <h3>{{ player.first_name }} {{ player.last_name }}</h3>
+              <h3>{{ player.firstName }} {{ player.lastName }}</h3>
             </td>
           </tr>
         </tbody>
@@ -32,7 +27,7 @@ import axios from 'axios';
 import _ from 'lodash';
 
 export default {
-  name: 'Roster',
+  name: 'Schedule',
   data() {
     return {
       headers: ['First Name', 'Last Name', 'Number'],
@@ -41,28 +36,38 @@ export default {
     };
   },
   computed: {
+    cleanedPlayers() {
+      return this.players.map(p => {
+        return {
+          firstName: p.gsx$firstname['$t'],
+          lastName: p.gsx$lastname['$t'],
+          number: Number(p.gsx$number['$t']),
+        };
+      });
+    },
+
     filteredPlayers() {
-      return _.sortBy(this.players.filter(p => {
-        const searchTerm = `${p.first_name},${p.last_name},${p.number}`.toLowerCase();
+      return _.sortBy(this.cleanedPlayers.filter(p => {
+        const searchTerm = `${p.firstName},${p.lastName},${p.number}`.toLowerCase();
         const found = searchTerm.indexOf(this.search.toLowerCase()) !== -1;
         return found ? true : false;
       }), ['number', 'lastName']);
     },
 
     orderedPlayers() {
-      return _.sortBy(this.filteredPlayers, [function(p) { return p.number; }]);
+      return _.sortBy(this.cleanedPlayers, [function(p) { return p.number; }]);
     }
   },
   methods: {
-    getRoster() {
-      axios.get('https://rockets-api.allensservices.com/api/roster')
+    getSchedule() {
+      axios.get('https://spreadsheets.google.com/feeds/list/1FB7Gn0Ydtbmv2C2iNMjDm37FGAj-7jIotma7vr6qXzI/od6/public/values?alt=json')
         .then(response => {
-          this.players = response.data;
+          this.players = response.data.feed.entry;
         })
     },
   },
   created() {
-    this.getRoster();
+    this.getSchedule();
   },
 }
 </script>
