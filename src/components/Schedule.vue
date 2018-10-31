@@ -2,21 +2,26 @@
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
       <h2 class='text-center'>Schedule</h2>
-      <table class='table table-sm' v-if='filteredPlayers.length'>
+      <table class='table table-sm' v-if='games.length'>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Visiting</th>
+            <th>Home</th>
+            <th>Time</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr v-for='(player, index) in filteredPlayers' :key='`player-${ index }`'>
-            <td class='pt-3'>
-              <h3><span class="badge badge-secondary badge-pill float-left ml-2 mr-3">{{ player.number }}</span></h3>
-            </td>
-            <td class='pt-3'>
-              <h3>{{ player.firstName }} {{ player.lastName }}</h3>
-            </td>
+          <tr v-for='(game, index) in games' :key='`game-${ index }`'>
+            <td>{{ game.datetime | date }}</td>
+            <td>{{ game.visitor }}</td>
+            <td>{{ game.home }}</td>
+            <td>{{ game.datetime | time }} (CST)</td>
           </tr>
         </tbody>
       </table>
       <div v-else class='text-center'>
-        <h5>No players</h5>
-        <button class='btn btn-secondary' @click.prevent='search = ""'>Clear filter</button>
+        <h5>No games</h5>
       </div>
     </div>
   </div>
@@ -25,44 +30,30 @@
 <script>
 import axios from 'axios';
 import _ from 'lodash';
+import moment from 'moment-timezone';
 
 export default {
   name: 'Schedule',
   data() {
     return {
       headers: ['First Name', 'Last Name', 'Number'],
-      players: [],
-      search: ''
+      games: [],
     };
   },
-  computed: {
-    cleanedPlayers() {
-      return this.players.map(p => {
-        return {
-          firstName: p.gsx$firstname['$t'],
-          lastName: p.gsx$lastname['$t'],
-          number: Number(p.gsx$number['$t']),
-        };
-      });
+  filters: {
+    date(value) {
+      return moment(value).tz('America/Chicago').format("dddd, MMMM Do");
     },
 
-    filteredPlayers() {
-      return _.sortBy(this.cleanedPlayers.filter(p => {
-        const searchTerm = `${p.firstName},${p.lastName},${p.number}`.toLowerCase();
-        const found = searchTerm.indexOf(this.search.toLowerCase()) !== -1;
-        return found ? true : false;
-      }), ['number', 'lastName']);
+    time(value) {
+      return moment(value).tz('America/Chicago').format("h:mm a");
     },
-
-    orderedPlayers() {
-      return _.sortBy(this.cleanedPlayers, [function(p) { return p.number; }]);
-    }
   },
   methods: {
     getSchedule() {
-      axios.get('https://spreadsheets.google.com/feeds/list/1FB7Gn0Ydtbmv2C2iNMjDm37FGAj-7jIotma7vr6qXzI/od6/public/values?alt=json')
+      axios.get('https://rockets-api.allensservices.com/api/schedule')
         .then(response => {
-          this.players = response.data.feed.entry;
+          this.games = response.data;
         })
     },
   },
