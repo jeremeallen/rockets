@@ -8,12 +8,7 @@
             <th>Place</th>
             <th>Team</th>
             <th>GP</th>
-            <th>W</th>
-            <th>L</th>
-            <th>OTL</th>
-            <th>SOW</th>
-            <th>SOL</th>
-            <th>PTS</th>
+            <th>Record</th>
           </tr>
         </thead>
         <tbody>
@@ -21,11 +16,7 @@
             <td>{{ team.order }}</td>
             <td>{{ team.team }}</td>
             <td>{{ team.games_played }}</td>
-            <td>{{ team.wins }}</td>
-            <td>{{ team.losses }}</td>
-            <td>{{ team.ot }}</td>
-            <td>{{ team.sow }}</td>
-            <td>{{ team.sol }}</td>
+            <td>{{ team.wins }} - {{ team.losses }} - {{ team.ot }}</td>
             <td>{{ team.points }}</td>
           </tr>
         </tbody>
