@@ -16,6 +16,9 @@
           <router-link tag="li" to="/schedule">
             <a class="nav-link">Schedule</a>
           </router-link>
+          <router-link tag="li" to="/standings">
+            <a class="nav-link">Standings</a>
+          </router-link>
         </ul>
       </div>
     </nav>
