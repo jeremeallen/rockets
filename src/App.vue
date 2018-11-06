@@ -19,6 +19,9 @@
           <router-link tag="li" to="/standings">
             <a class="nav-link">Standings</a>
           </router-link>
+          <router-link tag="li" to="/news">
+            <a class="nav-link">News</a>
+          </router-link>
         </ul>
       </div>
     </nav>

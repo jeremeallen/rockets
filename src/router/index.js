@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import News from '@/components/News.vue';
 import Roster from '@/components/Roster.vue';
 import Schedule from '@/components/Schedule.vue';
 import Standings from '@/components/Standings.vue';
@@ -22,6 +23,11 @@ export default new Router({
       path: '/standings',
       name: 'standings',
       component: Standings
+    },
+    {
+      path: '/news',
+      name: 'news',
+      component: News
     },
   ]
 })
