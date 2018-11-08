@@ -6,7 +6,7 @@
         <li 
           class="list-group-item"
           v-for='(article, index) in articles'
-          :key="`article-${ article.index }`"
+          :key="`article-${ index }`"
         >
           <a :href="article.href" target="blank">
             {{ article.title}}

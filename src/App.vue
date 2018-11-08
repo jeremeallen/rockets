@@ -5,22 +5,22 @@
         <img alt="NJ Rockets" src="./assets/NJR-logo_large.png" width='30'>
         NJ Rockets
       </a>
-      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" ref="hamburger">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="navbar-collapse collapse" id="navbarCollapse" style="">
         <ul class="navbar-nav mr-auto">
           <router-link tag="li" to="/" class="nav-item">
-            <a class="nav-link">Home</a>
+            <a class="nav-link" @click="closeHamburger">Home</a>
           </router-link>
           <router-link tag="li" to="/schedule">
-            <a class="nav-link">Schedule</a>
+            <a class="nav-link" @click="closeHamburger">Schedule</a>
           </router-link>
           <router-link tag="li" to="/standings">
-            <a class="nav-link">Standings</a>
+            <a class="nav-link" @click="closeHamburger">Standings</a>
           </router-link>
           <router-link tag="li" to="/news">
-            <a class="nav-link">News</a>
+            <a class="nav-link" @click="closeHamburger">News</a>
           </router-link>
         </ul>
       </div>
@@ -37,6 +37,14 @@
 
 export default {
   name: 'app',
+  watch: {
+    '$route': 'closeHamburger'
+  },
+  methods: {
+    closeHamburger() {
+      this.$refs.hamburger.click();
+    }
+  },
 }
 </script>
 
